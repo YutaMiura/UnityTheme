@@ -1,0 +1,46 @@
+.header {
+    height: 30px;
+    width: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-direction: row;
+}
+
+.header TextField {
+    width: 120px;
+    min-width: 120px;
+    max-width: 280px;
+    -unity-text-align: middle-center;    
+    border-right-width: 1px;
+    border-right-color: gray;
+}
+
+.header TextField TextInput {
+    background-color: rgba(1,1,1,0);
+    border-right-width: 0;
+    border-left-width: 0;
+    border-bottom-width: 0;
+    border-top-width: 0;
+}
+
+.header TextField TextInput TextElement{
+    -unity-text-align: middle-center;
+}
+
+.rows ThemeItemRow {
+    flex-direction: row;
+}
+
+.rows ThemeItemRow TextField {
+    width: 120px;
+    min-width: 120px;
+    max-width: 280px;
+    -unity-text-align: middle-center;
+}
+
+.rows ThemeItemRow ThemeItemColumnItem {
+    width: 120px;
+    min-width: 120px;
+    max-width: 280px;
+    -unity-text-align: middle-center;
+}

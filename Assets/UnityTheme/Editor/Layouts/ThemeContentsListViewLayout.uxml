@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UnityTheme/Editor/Styles/Resources/HeaderStyle.uss?fileID=7433441132597879392&amp;guid=7570c54b0f6654ed49cefbc6b9a317fd&amp;type=3#HeaderStyle" />
+    <ui:VisualElement name="controls" style="flex-direction: row; flex-grow: 0; justify-content: flex-end; align-self: auto; margin-right: 5px; margin-left: 5px; margin-top: 10px; margin-bottom: 5px;">
+        <ui:DropdownField choices="All,Color,String,Texture2D,Sprite" name="Filter" label="Filter" tooltip="You can filter by category." usage-hints="None" style="flex-grow: 0; flex-basis: auto; flex-shrink: 1; margin-right: auto;" />
+        <ui:EnumField type="UnityTheme.Model.EntryType, Assembly-CSharp" name="AddCategory" />
+        <ui:Button name="AddButton" style="align-self: flex-end;">
+            <ui:Label text="+" />
+        </ui:Button>
+    </ui:VisualElement>
+    <UnityTheme.Editor.ThemeItemListHeader columns="key,test" name="header" style="width: auto; display: flex; flex-grow: 0; flex-shrink: 0;" />
+    <ui:ScrollView horizontal-scroller-visibility="Hidden" horizontal-page-size="0" name="rows" class="rows" style="height: auto; max-height: 100%; margin-left: 0; padding-left: 5px; padding-right: 5px;" />
+    <ui:Label tabindex="-1" text="You need create theme first." display-tooltip-when-elided="true" name="CreateNewThemeDescription" style="align-items: auto; align-self: center; margin-bottom: 15px; margin-top: 15px;" />
+    <ui:Button text="Create New Theme" display-tooltip-when-elided="true" name="CreateTheme" style="visibility: visible; max-width: 200px; align-self: center;" />
+    <ui:Label tabindex="-1" text="You need create Entires first." display-tooltip-when-elided="true" name="CreateNewEntriesDescription" style="align-items: auto; align-self: center; margin-bottom: 15px; margin-top: 15px;" />
+    <ui:Button text="Create Entires" display-tooltip-when-elided="true" name="CreateEntries" style="visibility: visible; max-width: 200px; align-self: center;" />
+</ui:UXML>
