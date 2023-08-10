@@ -4,37 +4,37 @@ using UnityEngine;
 namespace UnityTheme.Model
 {
     [Serializable]
-    public sealed class Texture2DEntry : Entry<Texture2D>, IDisposable
+    public sealed class TextureEntry : Entry<Texture>, IDisposable
     {
         [SerializeField]
         private int themeId;
         [SerializeField]
         private string key;
         [SerializeField]
-        private Texture2D value;
+        private Texture value;
         
         public override int ThemeId => themeId;
 
         public override string Key => key;
 
-        public override Texture2D Value => value;
-        public override EntryType Type => EntryType.Texture2D;
+        public override Texture Value => value;
+        public override EntryType Type => EntryType.Texture;
 
-        public Texture2DEntry(int themeId, string key, Texture2D tex)
+        public TextureEntry(int themeId, string key, Texture tex)
         {
             this.themeId = themeId;
             this.value = tex;
             this.key = key;            
         }
 
-        public static Texture2DEntry CreateDraft(int themeId)
+        public static TextureEntry CreateDraft(int themeId)
         {
-            return new Texture2DEntry(themeId, "", null);
+            return new TextureEntry(themeId, "", null);
         }
 
         public override string ToString()
         {
-            return $"{nameof(Texture2DEntry)} [Theme:{ThemeId} Key:{Key}]";
+            return $"{nameof(TextureEntry)} [Theme:{ThemeId} Key:{Key}]";
         }
 
         public void Dispose()

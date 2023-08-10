@@ -58,8 +58,8 @@ namespace UnityTheme.Editor
                         return new EntryUnion(SpriteEntry.CreateDraft(t.Id));
                     case EntryType.String:
                         return new EntryUnion(StringEntry.CreateDraft(t.Id));
-                    case EntryType.Texture2D:
-                        return new EntryUnion(Texture2DEntry.CreateDraft(t.Id));
+                    case EntryType.Texture:
+                        return new EntryUnion(TextureEntry.CreateDraft(t.Id));
                     default:
                         throw new NotSupportedException($"{e} is not supported EntryType.");
                 }

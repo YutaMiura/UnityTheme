@@ -4,7 +4,7 @@ namespace UnityTheme.Model
     {
         String,
         Color,
-        Texture2D,
+        Texture,
         Sprite
     }
 }

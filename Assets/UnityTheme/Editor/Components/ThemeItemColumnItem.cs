@@ -14,7 +14,7 @@ namespace UnityTheme.Editor
         public ThemeItemColumnItemEvents.OnChangeText OnChangeText;
         public ThemeItemColumnItemEvents.OnChangeColor OnChangeColor;
         public ThemeItemColumnItemEvents.OnChangeSprite OnChangeSprite;
-        public ThemeItemColumnItemEvents.OnChangeTexture2D OnChangeTexture2D;
+        public ThemeItemColumnItemEvents.OnChangeTexture OnChangeTexture;
         
         public EntryType type { get; set; }
         private Color? _color;
@@ -89,30 +89,30 @@ namespace UnityTheme.Editor
             }
         }
 
-        private Texture2D _texture2D;
+        private Texture _texture;
 
-        public Texture2D texture2D
+        public Texture texture
         {
-            get => _texture2D;
+            get => _texture;
             set
             {
                 ClearAllAttribute();
-                var texture2DField = new ObjectField();
-                texture2DField.style.width = ContentWidth;
-                texture2DField.objectType = typeof(Texture2D);
-                texture2DField.value = value;
-                texture2DField.RegisterValueChangedCallback(ev => {
+                var textureField = new ObjectField();
+                textureField.style.width = ContentWidth;
+                textureField.objectType = typeof(Texture);
+                textureField.value = value;
+                textureField.RegisterValueChangedCallback(ev => {
                     if (ev.newValue == null)
                     {
-                        OnChangeTexture2D?.Invoke(null);
+                        OnChangeTexture?.Invoke(null);
                     }
                     else
                     {
-                        OnChangeTexture2D?.Invoke(ev.newValue as Texture2D);
+                        OnChangeTexture?.Invoke(ev.newValue as Texture);
                     }
                 });
-                hierarchy.Add(texture2DField);
-                type = EntryType.Texture2D;
+                hierarchy.Add(textureField);
+                type = EntryType.Texture;
             }
         }
 
@@ -183,7 +183,7 @@ namespace UnityTheme.Editor
             public delegate void OnChangeText(string text);
             public delegate void OnChangeColor(Color color);
             public delegate void OnChangeSprite(Sprite sprite);
-            public delegate void OnChangeTexture2D(Texture2D texture2D);
+            public delegate void OnChangeTexture(Texture texture2D);
         }
     }
 }

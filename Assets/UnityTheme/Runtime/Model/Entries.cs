@@ -101,7 +101,7 @@ namespace UnityTheme.Model
             entries.Add(e);
         }
 
-        public void AddEntry(Texture2DEntry entry)
+        public void AddEntry(TextureEntry entry)
         {
             ThrowIfDuplicateKey(entry);
             var e = new EntryUnion(entry);

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UnityTheme.Model
 {
@@ -16,13 +17,13 @@ namespace UnityTheme.Model
         private StringEntry stringEntry;
         [SerializeField]
         private SpriteEntry spriteEntry;
-        [SerializeField]
-        private Texture2DEntry texture2DEntry;
+        [FormerlySerializedAs("texture2DEntry")] [SerializeField]
+        private TextureEntry textureEntry;
         
         public ColorEntry ColorEntry => colorEntry;
         public StringEntry StringEntry => stringEntry;
         public SpriteEntry SpriteEntry => spriteEntry;
-        public Texture2DEntry Texture2DEntry => texture2DEntry;
+        public TextureEntry TextureEntry => textureEntry;
 
         public string Key
         {
@@ -33,7 +34,7 @@ namespace UnityTheme.Model
                     EntryType.Color => ColorEntry.Key,
                     EntryType.Sprite => SpriteEntry.Key,
                     EntryType.String => StringEntry.Key,
-                    EntryType.Texture2D => Texture2DEntry.Key,
+                    EntryType.Texture => TextureEntry.Key,
                     _ => throw new ArgumentException($"{Type} is not supported.")
                 };
             }
@@ -48,7 +49,7 @@ namespace UnityTheme.Model
                     EntryType.Color => ColorEntry.ThemeId,
                     EntryType.Sprite => SpriteEntry.ThemeId,
                     EntryType.String => StringEntry.ThemeId,
-                    EntryType.Texture2D => Texture2DEntry.ThemeId,
+                    EntryType.Texture => TextureEntry.ThemeId,
                     _ => throw new ArgumentException($"{Type} is not supported.")
                 };
             }
@@ -74,10 +75,10 @@ namespace UnityTheme.Model
             this.spriteEntry = spriteEntry;
         }
 
-        public EntryUnion(Texture2DEntry texture2DEntry)
+        public EntryUnion(TextureEntry textureEntry)
         {
-            type = texture2DEntry.Type;
-            this.texture2DEntry = texture2DEntry;
+            type = textureEntry.Type;
+            this.textureEntry = textureEntry;
         }
 
         public void Dispose()
@@ -85,7 +86,7 @@ namespace UnityTheme.Model
             ColorEntry?.Dispose();
             SpriteEntry?.Dispose();
             StringEntry?.Dispose();
-            Texture2DEntry?.Dispose();
+            TextureEntry?.Dispose();
         }
 
         public override string ToString()
@@ -93,7 +94,7 @@ namespace UnityTheme.Model
             if (Type == EntryType.Color) return ColorEntry?.ToString();
             if (Type == EntryType.Sprite) return SpriteEntry?.ToString();
             if (Type == EntryType.String) return StringEntry?.ToString();
-            if (Type == EntryType.Texture2D) return Texture2DEntry?.ToString();
+            if (Type == EntryType.Texture) return TextureEntry?.ToString();
             return "EntryUnion has no Type.";
         }
     }
@@ -117,9 +118,9 @@ namespace UnityTheme.Model
                 return new EntryUnion(new StringEntry(src.ThemeId, key, src.StringEntry.Value));
             }
 
-            if (src.Type == EntryType.Texture2D)
+            if (src.Type == EntryType.Texture)
             {
-                return new EntryUnion(new Texture2DEntry(src.ThemeId, key, src.Texture2DEntry.Value));
+                return new EntryUnion(new TextureEntry(src.ThemeId, key, src.TextureEntry.Value));
             }
 
             throw new ArgumentException($"{src.Type} is not supported.");

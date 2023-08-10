@@ -81,9 +81,9 @@ namespace UnityTheme.Editor
                         item.text = e.StringEntry.Value;
                         item.OnChangeText = t => OnChangeText(e.ThemeId, t);
                         break;
-                    case EntryType.Texture2D:
-                        item.texture2D = e.Texture2DEntry.Value;
-                        item.OnChangeTexture2D = t => OnChangeTexture2D(e.ThemeId, t);
+                    case EntryType.Texture:
+                        item.texture = e.TextureEntry.Value;
+                        item.OnChangeTexture = t => OnChangeTexture(e.ThemeId, t);
                         break;
                 }
                 
@@ -91,14 +91,14 @@ namespace UnityTheme.Editor
             }
         }
 
-        private void OnChangeTexture2D(int themeId, Texture2D texture2d)
+        private void OnChangeTexture(int themeId, Texture texture)
         {
             for (var i = 0; i < Entries.Length; i++)
             {
                 if (Entries[i].ThemeId == themeId)
                 {
-                    if (Entries[i].Type != EntryType.Texture2D) throw new SystemException($"Entry must be same type. expected {EntryType.Texture2D}, but {Entries[i].Type}");
-                    var newEntry = new Texture2DEntry(Entries[i].ThemeId, Entries[i].Key, texture2d);
+                    if (Entries[i].Type != EntryType.Texture) throw new SystemException($"Entry must be same type. expected {EntryType.Texture}, but {Entries[i].Type}");
+                    var newEntry = new TextureEntry(Entries[i].ThemeId, Entries[i].Key, texture);
                     Entries[i].Dispose();
                     Entries[i] = new EntryUnion(newEntry);
                     return;
