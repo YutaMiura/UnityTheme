@@ -1,34 +1,36 @@
+using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
-    [RequireComponent(typeof(Image))]
-    public class SpriteThemeObserver : MonoBehaviour
+    [RequireComponent(typeof(TMP_Text))]
+    public class TMPTextStringThemeObserver : MonoBehaviour
     {
         [SerializeField]
         private string key;
-        private Image _image;
+
+        private TMP_Text _text;
+
         private void Awake()
         {
-            _image = GetComponent<Image>();
-            
+            _text = GetComponent<TMP_Text>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
         }
 
         private void OnChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
-            if (e.Type != EntryType.Sprite)
+            if (e.Type != EntryType.String)
             {
-                Debug.LogWarning($"{nameof(SpriteThemeObserver)} expects type of {EntryType.Sprite}, but you set {e.Type}");
+                Debug.LogWarning($"{nameof(ColorThemeObserver)} expects type of {EntryType.String}, but you set {e.Type}");
                 return;
             }
 
-            _image.sprite = e.SpriteEntry.Value;
+            _text.text = e.StringEntry.Value;
         }
-        
+
         private void OnDestroy()
         {
             ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;

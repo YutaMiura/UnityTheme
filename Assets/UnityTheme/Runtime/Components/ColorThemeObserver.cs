@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityTheme.Model;
@@ -29,6 +28,11 @@ namespace UnityTheme.Runtime.Components
             }
 
             _graphic.color = e.ColorEntry.Value; 
+        }
+        
+        private void OnDestroy()
+        {
+            ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;
         }
     }
 }
