@@ -49,6 +49,7 @@ namespace UnityTheme.Editor
                 };
                 headerList.AddRange(Themes.Instance.All.Select(t => t.Name));
                 header.columns = string.Join(",", headerList);
+                header.OnClickThemeAdd = OnClickThemeAdd;
                 
                 foreach (var key in Entries.Instance.AllKeys)
                 {
@@ -84,6 +85,14 @@ namespace UnityTheme.Editor
             addButton.clicked += OnClickAdd;
             
             rootVisualElement.MarkDirtyRepaint();
+        }
+
+        private void OnClickThemeAdd()
+        {
+            Themes.Instance.AddTheme($"Theme {Themes.Instance.Count + 1}");
+            
+            var header = rootVisualElement.Q<ThemeItemListHeader>("header");
+            header.MarkDirtyRepaint();
         }
 
         private void OnClickCreateEntriesFirst()
@@ -168,7 +177,9 @@ namespace UnityTheme.Editor
                 }
             }
 
-            EntriesRepository.Save();
+            EditorUtility.SetDirty(Entries.Instance);
+            EditorUtility.SetDirty(Themes.Instance);
+            AssetDatabase.SaveAssets();
         }
 
 

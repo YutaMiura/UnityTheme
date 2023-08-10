@@ -23,6 +23,8 @@ namespace UnityTheme.Model
         public IReadOnlyList<Theme> All => themes;
 
         public bool IsEmpty => themes.Count == 0;
+
+        public int Count => themes.Count();
         
         private static Themes _instance;
 
@@ -66,7 +68,7 @@ namespace UnityTheme.Model
             throw new NoThemeFound($"Theme[id:{id}] is not found.");
         }
 
-        public void AddThemes(string name)
+        public void AddTheme(string name)
         {
             var newThemeId = 1;
             if (themes == null)

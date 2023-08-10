@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityTheme.Editor.Styles;
 using UnityTheme.Model;
 
 namespace UnityTheme.Editor
@@ -169,7 +170,7 @@ namespace UnityTheme.Editor
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var uss = Resources.Load<StyleSheet>("HeaderStyle");
+                var uss = StyleLoader.LoadStyle();
                 if (ve is ThemeItemRow row)
                 {
                     row.name = "row";

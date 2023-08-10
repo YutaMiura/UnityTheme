@@ -12,4 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab8570292fc4ee999d2857e6d50962b, type: 3}
   m_Name: Entries
   m_EditorClassIdentifier: 
-  entries: []
+  entries:
+  - colorEntry:
+      themeId: 0
+      value: {r: 0, g: 0, b: 0, a: 0}
+      key: 
+    stringEntry:
+      themeId: 1
+      key: test
+      value: test
+    spriteEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+    texture2DEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+  - colorEntry:
+      themeId: 0
+      value: {r: 0, g: 0, b: 0, a: 0}
+      key: 
+    stringEntry:
+      themeId: 2
+      key: test
+      value: ddd
+    spriteEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+    texture2DEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}

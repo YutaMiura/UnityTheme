@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
+using UnityTheme.Editor.Styles;
 
 namespace UnityTheme.Editor
 {
     public class ThemeItemListHeader : VisualElement
     {         
         private string _columns;
+        public ThemeListHeaderEvents.OnClickThemeAdd OnClickThemeAdd;
         public string columns
         {
             get => _columns;
@@ -21,6 +23,8 @@ namespace UnityTheme.Editor
                     tf.value = column;
                     hierarchy.Add(tf);
                 }
+                
+                hierarchy.Add(AddThemeButton(() => OnClickThemeAdd?.Invoke()));
             }
         }
         
@@ -46,7 +50,7 @@ namespace UnityTheme.Editor
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var uss = Resources.Load<StyleSheet>("HeaderStyle");
+                var uss = StyleLoader.LoadStyle();
                 if (ve is ThemeItemListHeader header)
                 {
                     var value = _columnsAttr.GetValueFromBag(bag, cc);
@@ -60,8 +64,27 @@ namespace UnityTheme.Editor
                         tf.value = column;
                         header.hierarchy.Add(tf);
                     }
+                    
+                    header.hierarchy.Add(header.AddThemeButton(() => header.OnClickThemeAdd?.Invoke()));
                 }
             }
+        }
+
+        private Button AddThemeButton(Action clicked)
+        {
+            var uss = StyleLoader.LoadStyle();
+            var bt = new Button();
+            bt.name = "AddThemeButton";
+            bt.text = "+";
+            bt.AddToClassList("addThemeButton");
+            bt.styleSheets.Add(uss);
+            bt.clicked += clicked;
+            return bt;
+        }
+
+        public class ThemeListHeaderEvents
+        {
+            public delegate void OnClickThemeAdd();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace UnityTheme.Editor
                 return null;
 
             var asset =  utils.CreateAsset(assetPath, false);
-            asset.AddThemes("Default");
+            asset.AddTheme("Default");
             return asset;
         }
     }

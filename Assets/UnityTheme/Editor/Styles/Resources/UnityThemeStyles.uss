@@ -44,3 +44,9 @@
     max-width: 280px;
     -unity-text-align: middle-center;
 }
+
+.addThemeButton {
+    width: 30px;
+    height: 30px;
+    -unity-text-align: middle-center;
+}
