@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityTheme.Editor.Styles;
@@ -11,6 +12,7 @@ namespace UnityTheme.Editor
     public class ThemeItemRow : VisualElement
     {
         public EntryUnion[] Entries { get; private set; }
+        public ThemeItemRowEvents.OnDeleteEntry OnDeleteEntry;
 
         public string Key
         {
@@ -42,6 +44,21 @@ namespace UnityTheme.Editor
             }
 
             Entries = entryUnions;
+
+            var minusButton = new Button();
+            minusButton.name = "minusEntryButton";
+            minusButton.text = "-";
+            minusButton.AddToClassList("minusEntryButton");
+            var uss = StyleLoader.LoadStyle();
+            minusButton.styleSheets.Add(uss);
+            minusButton.clicked += () => {
+                var r = EditorUtility.DisplayDialog("Confirm delete entry", "Are you sure delete item?", "OK", "Cancel");
+                if (r)
+                {
+                    OnDeleteEntry?.Invoke(Key);    
+                }
+            };
+            hierarchy.Add(minusButton);
             
             var tf = new TextField();
             tf.value = key;
@@ -182,5 +199,10 @@ namespace UnityTheme.Editor
                 }
             }
         }
+    }
+
+    public class ThemeItemRowEvents
+    {
+        public delegate void OnDeleteEntry(string key);
     }
 }

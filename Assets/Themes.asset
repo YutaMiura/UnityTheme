@@ -17,3 +17,7 @@ MonoBehaviour:
     name: Default
   - id: 2
     name: Theme 2
+  - id: 3
+    name: Theme 3
+  - id: 4
+    name: Theme 4

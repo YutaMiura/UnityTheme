@@ -100,6 +100,11 @@ namespace UnityTheme.Model
             entries.Add(e);
         }
 
+        public void RemoveEntry(string key)
+        {
+            entries.RemoveAll(e => e.Key.Equals(key));
+        }
+
         public void ClearEntry()
         {
             entries.Clear();

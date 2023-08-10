@@ -17,5 +17,10 @@ namespace UnityTheme.Editor.Extentions
             var distinctKeys = rows.Select(r => r.Key).Distinct();
             return distinctKeys.Count() != rows.Count();
         }
+
+        public static bool HasContainsEmptyKey(this ThemeItemRow[] rows)
+        {
+            return rows.Any(r => string.IsNullOrEmpty(r.Key));
+        }
     }
 }

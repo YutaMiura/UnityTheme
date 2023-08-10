@@ -50,3 +50,12 @@
     height: 30px;
     -unity-text-align: middle-center;
 }
+
+.minusEntryButton {
+    width: 15px;
+    height: 15px;
+    background-color: darkred;
+    align-content: center;
+    align-items: center;
+    margin: 3px;
+}

@@ -66,10 +66,16 @@ namespace UnityTheme.Editor
             }).ToArray();
             var row = new ThemeItemRow();
             row.SetEntries(entries);
-            
+            row.OnDeleteEntry += OnDeleteEntry;
             _rows.Add(row);
             
             _rows.MarkDirtyRepaint();
+        }
+
+        private void OnDeleteEntry(string key)
+        {
+            Entries.Instance.RemoveEntry(key);
+            DrawContents();
         }
 
         private void DrawContents()
@@ -106,6 +112,7 @@ namespace UnityTheme.Editor
                     var entries = Entries.Instance.EntriesByKey(key);
                     var row = new ThemeItemRow();
                     row.SetEntries(entries.ToArray());
+                    row.OnDeleteEntry += OnDeleteEntry;
                     _rows.Add(row);
                 }
                 
@@ -171,7 +178,20 @@ namespace UnityTheme.Editor
 
             var rows = _rows.Children().OfType<ThemeItemRow>();
             var themeItemRows = rows as ThemeItemRow[] ?? rows.ToArray();
-            if (themeItemRows.HasDuplicatedKey()) throw new DuplicateKey("Save failed. duplicated key found.");
+            if (themeItemRows.HasDuplicatedKey())
+            {
+                EditorUtility.DisplayDialog("Save Failed", "Duplicated key found. \n" +
+                                                           "You should set unique key to each entries.",
+                    "OK");
+                throw new DuplicateKey("Save failed. duplicated key found.");
+            }
+
+            if (themeItemRows.HasContainsEmptyKey())
+            {
+                EditorUtility.DisplayDialog("Save Failed", "Key must has not empty.",
+                    "OK");
+                throw new InvalidKey("Save failed. key must has not empty.");
+            }
             
             
             Entries.Instance.ClearEntry();
