@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityTheme.Model;
@@ -17,6 +16,8 @@ namespace UnityTheme.Runtime.Components
         {
             _text = GetComponent<TMP_Text>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
+
+            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
 
         private void OnChangeTheme(Theme theme)
@@ -24,7 +25,8 @@ namespace UnityTheme.Runtime.Components
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.String)
             {
-                Debug.LogWarning($"{nameof(ColorThemeObserver)} expects type of {EntryType.String}, but you set {e.Type}");
+                Debug.LogWarning(
+                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.String}, but you set {e.Type}");
                 return;
             }
 

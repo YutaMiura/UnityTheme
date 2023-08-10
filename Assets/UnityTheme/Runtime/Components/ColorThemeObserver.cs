@@ -15,7 +15,9 @@ namespace UnityTheme.Runtime.Components
         private void Awake()
         {
             _graphic = GetComponent<Graphic>();
-            ThemeManager.Instance.OnChangeTheme += OnChangeTheme; 
+            ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
+
+            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
 
         private void OnChangeTheme(Theme theme)
@@ -23,13 +25,14 @@ namespace UnityTheme.Runtime.Components
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.Color)
             {
-                Debug.LogWarning($"{nameof(ColorThemeObserver)} expects type of {EntryType.Color}, but you set {e.Type}");
+                Debug.LogWarning(
+                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.Color}, but you set {e.Type}");
                 return;
             }
 
-            _graphic.color = e.ColorEntry.Value; 
+            _graphic.color = e.ColorEntry.Value;
         }
-        
+
         private void OnDestroy()
         {
             ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;

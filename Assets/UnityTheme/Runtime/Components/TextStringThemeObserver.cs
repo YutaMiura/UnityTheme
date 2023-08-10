@@ -16,6 +16,8 @@ namespace UnityTheme.Runtime.Components
         {
             _text = GetComponent<Text>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
+
+            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
 
         private void OnChangeTheme(Theme theme)
@@ -23,13 +25,14 @@ namespace UnityTheme.Runtime.Components
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.String)
             {
-                Debug.LogWarning($"{nameof(ColorThemeObserver)} expects type of {EntryType.String}, but you set {e.Type}");
+                Debug.LogWarning(
+                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.String}, but you set {e.Type}");
                 return;
             }
 
             _text.text = e.StringEntry.Value;
         }
-        
+
         private void OnDestroy()
         {
             ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;

@@ -9,12 +9,16 @@ namespace UnityTheme.Runtime.Components
     {
         [SerializeField]
         private string key;
+
         private Image _image;
+
         private void Awake()
         {
             _image = GetComponent<Image>();
-            
+
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
+
+            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
 
         private void OnChangeTheme(Theme theme)
@@ -22,13 +26,14 @@ namespace UnityTheme.Runtime.Components
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.Sprite)
             {
-                Debug.LogWarning($"{nameof(SpriteThemeObserver)} expects type of {EntryType.Sprite}, but you set {e.Type}");
+                Debug.LogWarning(
+                    $"{nameof(SpriteThemeObserver)} expects type of {EntryType.Sprite}, but you set {e.Type}");
                 return;
             }
 
             _image.sprite = e.SpriteEntry.Value;
         }
-        
+
         private void OnDestroy()
         {
             ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;
