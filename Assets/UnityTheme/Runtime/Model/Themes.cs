@@ -111,6 +111,9 @@ namespace UnityTheme.Model
         private void OnEnable()
         {
             Debug.Log($"{nameof(Themes)} OnEnable");
+#if !UNITY_EDITOR
+            _instance = this;
+#endif
         }
 
         private void OnDestroy()

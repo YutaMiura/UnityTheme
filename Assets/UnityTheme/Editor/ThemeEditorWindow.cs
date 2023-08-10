@@ -206,6 +206,18 @@ namespace UnityTheme.Editor
             EditorUtility.SetDirty(Entries.Instance);
             EditorUtility.SetDirty(Themes.Instance);
             AssetDatabase.SaveAssets();
+            var assets = PlayerSettings.GetPreloadedAssets().ToList();
+            if (!assets.Contains(Entries.Instance))
+            {
+                assets.Add(Entries.Instance);
+            }
+
+            if (!assets.Contains(Themes.Instance))
+            {
+                assets.Add(Themes.Instance);
+            }
+            
+            PlayerSettings.SetPreloadedAssets(assets.ToArray());
         }
 
 

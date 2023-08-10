@@ -60,13 +60,14 @@ namespace UnityTheme.Model
         {
             Debug.Log($"{nameof(Entries)} Awake");
         }
-
-#if UNITY_EDITOR
+        
         private void OnEnable()
         {
             Debug.Log($"OnEnable {nameof(Entries)}");
-        }
+#if !UNITY_EDITOR
+            _instance = this;
 #endif
+        }
 
         private void OnDestroy()
         {

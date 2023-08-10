@@ -115,3 +115,37 @@ MonoBehaviour:
       themeId: 0
       key: 
       value: {fileID: 0}
+  - type: 0
+    colorEntry:
+      themeId: 0
+      value: {r: 0, g: 0, b: 0, a: 0}
+      key: 
+    stringEntry:
+      themeId: 1
+      key: text.a
+      value: Daylight
+    spriteEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+    texture2DEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+  - type: 0
+    colorEntry:
+      themeId: 0
+      value: {r: 0, g: 0, b: 0, a: 0}
+      key: 
+    stringEntry:
+      themeId: 2
+      key: text.a
+      value: SunSet
+    spriteEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
+    texture2DEntry:
+      themeId: 0
+      key: 
+      value: {fileID: 0}
