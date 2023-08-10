@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   themes:
   - id: 1
-    name: Default
+    name: DayLight
   - id: 2
-    name: Theme 2
-  - id: 3
-    name: Theme 3
-  - id: 4
-    name: Theme 4
+    name: SunSet

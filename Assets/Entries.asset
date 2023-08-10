@@ -13,77 +13,48 @@ MonoBehaviour:
   m_Name: Entries
   m_EditorClassIdentifier: 
   entries:
-  - colorEntry:
+  - type: 3
+    colorEntry:
       themeId: 0
       value: {r: 0, g: 0, b: 0, a: 0}
       key: 
     stringEntry:
+      themeId: 0
+      key: 
+      value: 
+    spriteEntry:
       themeId: 1
-      key: asdfasd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
+      key: image.bg
+      value: {fileID: 21300000, guid: de8fd2d9ebbfb428fa485ce3a5e3a0ab, type: 3}
     texture2DEntry:
       themeId: 0
       key: 
       value: {fileID: 0}
-  - colorEntry:
+  - type: 3
+    colorEntry:
       themeId: 0
       value: {r: 0, g: 0, b: 0, a: 0}
       key: 
     stringEntry:
+      themeId: 0
+      key: 
+      value: 
+    spriteEntry:
       themeId: 2
-      key: asdfasd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
+      key: image.bg
+      value: {fileID: 21300000, guid: 45d9f691ad0844d9eb3c0cf37adfdcde, type: 3}
     texture2DEntry:
       themeId: 0
       key: 
       value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
-      themeId: 3
-      key: asdfasd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
-      themeId: 4
-      key: asdfasd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
+  - type: 1
+    colorEntry:
       themeId: 1
-      key: dddd
+      value: {r: 0.06848521, g: 0.61176294, b: 0.764151, a: 1}
+      key: color.bt
+    stringEntry:
+      themeId: 0
+      key: 
       value: 
     spriteEntry:
       themeId: 0
@@ -93,13 +64,14 @@ MonoBehaviour:
       themeId: 0
       key: 
       value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
+  - type: 1
+    colorEntry:
       themeId: 2
-      key: dddd
+      value: {r: 0.7924528, g: 0.36985996, b: 0, a: 1}
+      key: color.bt
+    stringEntry:
+      themeId: 0
+      key: 
       value: 
     spriteEntry:
       themeId: 0
@@ -109,45 +81,14 @@ MonoBehaviour:
       themeId: 0
       key: 
       value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
-      themeId: 3
-      key: dddd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
-      themeId: 4
-      key: dddd
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
+  - type: 1
+    colorEntry:
       themeId: 1
-      key: aaa
+      value: {r: 0.4481132, g: 0.88108504, b: 1, a: 1}
+      key: color.label
+    stringEntry:
+      themeId: 0
+      key: 
       value: 
     spriteEntry:
       themeId: 0
@@ -157,45 +98,14 @@ MonoBehaviour:
       themeId: 0
       key: 
       value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
+  - type: 1
+    colorEntry:
       themeId: 2
-      key: aaa
-      value: 
-    spriteEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
+      value: {r: 1, g: 0.73254716, b: 0.504717, a: 1}
+      key: color.label
     stringEntry:
-      themeId: 3
-      key: aaa
-      value: 
-    spriteEntry:
       themeId: 0
       key: 
-      value: {fileID: 0}
-    texture2DEntry:
-      themeId: 0
-      key: 
-      value: {fileID: 0}
-  - colorEntry:
-      themeId: 0
-      value: {r: 0, g: 0, b: 0, a: 0}
-      key: 
-    stringEntry:
-      themeId: 4
-      key: aaa
       value: 
     spriteEntry:
       themeId: 0

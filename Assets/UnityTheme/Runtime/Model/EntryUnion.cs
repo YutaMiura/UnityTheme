@@ -6,7 +6,9 @@ namespace UnityTheme.Model
     [Serializable]
     public class EntryUnion : IDisposable
     {
-        public readonly EntryType Type;
+        [SerializeField]
+        private EntryType type;
+        public EntryType Type => type;
 
         [SerializeField]
         private ColorEntry colorEntry;
@@ -56,25 +58,25 @@ namespace UnityTheme.Model
 
         public EntryUnion(ColorEntry colorEntry)
         {
-            Type = colorEntry.Type;
+            type = colorEntry.Type;
             this.colorEntry = colorEntry;
         }
 
         public EntryUnion(StringEntry stringEntry)
         {
-            Type = stringEntry.Type;
+            type = stringEntry.Type;
             this.stringEntry = stringEntry;
         }
 
         public EntryUnion(SpriteEntry spriteEntry)
         {
-            Type = spriteEntry.Type;
+            type = spriteEntry.Type;
             this.spriteEntry = spriteEntry;
         }
 
         public EntryUnion(Texture2DEntry texture2DEntry)
         {
-            Type = texture2DEntry.Type;
+            type = texture2DEntry.Type;
             this.texture2DEntry = texture2DEntry;
         }
 

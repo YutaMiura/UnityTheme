@@ -20,6 +20,13 @@ namespace UnityTheme.Model
             return entries.FindAll(e => e.Key.Equals(key));
         }
 
+        public EntryUnion FindEntryByKeyAndTheme(string key, int themeId)
+        {
+            var e =entries.FirstOrDefault(e => e.Key.Equals(key) && e.ThemeId == themeId);
+            if (e == null) throw new NoEntryFound();
+            return e;
+        }
+
         private static Entries _instance;
 
         public static Entries Instance

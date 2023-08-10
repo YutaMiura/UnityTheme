@@ -42,7 +42,7 @@ namespace UnityTheme.Model
                         })
                         .FirstOrDefault();
 #else
-                    _instance = CreateInstance<Entries>();
+                    _instance = CreateInstance<Themes>();
 #endif
                 }
 
