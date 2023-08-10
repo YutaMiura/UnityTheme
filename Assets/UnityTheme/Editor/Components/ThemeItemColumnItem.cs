@@ -10,6 +10,11 @@ namespace UnityTheme.Editor
     public class ThemeItemColumnItem : VisualElement
     {
         private const int ContentWidth = 120;
+
+        public ThemeItemColumnItemEvents.OnChangeText OnChangeText;
+        public ThemeItemColumnItemEvents.OnChangeColor OnChangeColor;
+        public ThemeItemColumnItemEvents.OnChangeSprite OnChangeSprite;
+        public ThemeItemColumnItemEvents.OnChangeTexture2D OnChangeTexture2D;
         
         public EntryType type { get; set; }
         private Color? _color;
@@ -24,6 +29,9 @@ namespace UnityTheme.Editor
                     var colorField = new ColorField();
                     colorField.style.width = ContentWidth;
                     colorField.value = value.Value;
+                    colorField.RegisterValueChangedCallback(ev => {
+                        OnChangeColor?.Invoke(ev.newValue);
+                    });
                     _color = value;
                     hierarchy.Add(colorField);
                     type = EntryType.Color;    
@@ -43,6 +51,9 @@ namespace UnityTheme.Editor
                     var textField = new TextField();
                     textField.style.width = ContentWidth;
                     textField.value = value;
+                    textField.RegisterValueChangedCallback(ev => {
+                        OnChangeText?.Invoke(ev.newValue);
+                    });
                     _text = value;
                     hierarchy.Add(textField);
                     type = EntryType.String;    
@@ -62,6 +73,16 @@ namespace UnityTheme.Editor
                 spriteField.style.width = ContentWidth;
                 spriteField.objectType = typeof(Sprite);
                 spriteField.value = value;
+                spriteField.RegisterValueChangedCallback(ev => {
+                    if (ev.newValue == null)
+                    {
+                        OnChangeSprite?.Invoke(null);
+                    }
+                    else
+                    {
+                        OnChangeSprite?.Invoke(ev.newValue as Sprite);    
+                    }
+                });
                 _sprite = value;
                 hierarchy.Add(spriteField);
                 type = EntryType.Sprite;
@@ -80,6 +101,16 @@ namespace UnityTheme.Editor
                 texture2DField.style.width = ContentWidth;
                 texture2DField.objectType = typeof(Texture2D);
                 texture2DField.value = value;
+                texture2DField.RegisterValueChangedCallback(ev => {
+                    if (ev.newValue == null)
+                    {
+                        OnChangeTexture2D?.Invoke(null);
+                    }
+                    else
+                    {
+                        OnChangeTexture2D?.Invoke(ev.newValue as Texture2D);
+                    }
+                });
                 hierarchy.Add(texture2DField);
                 type = EntryType.Texture2D;
             }
@@ -145,6 +176,14 @@ namespace UnityTheme.Editor
                     throw new AggregateException($"{nameof(ThemeItemColumnItem)} initialize error.");
                 }
             }
+        }
+
+        public class ThemeItemColumnItemEvents
+        {
+            public delegate void OnChangeText(string text);
+            public delegate void OnChangeColor(Color color);
+            public delegate void OnChangeSprite(Sprite sprite);
+            public delegate void OnChangeTexture2D(Texture2D texture2D);
         }
     }
 }

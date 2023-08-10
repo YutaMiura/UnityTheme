@@ -53,19 +53,92 @@ namespace UnityTheme.Editor
                 {
                     case EntryType.Color:
                         item.color = e.ColorEntry.Value;
+                        item.OnChangeColor = c => OnChangeColor(e.ThemeId, c);
                         break;
                     case EntryType.Sprite:
                         item.sprite = e.SpriteEntry.Value;
+                        item.OnChangeSprite = s => OnChangeSprite(e.ThemeId, s);
                         break;
                     case EntryType.String:
                         item.text = e.StringEntry.Value;
+                        item.OnChangeText = t => OnChangeText(e.ThemeId, t);
                         break;
                     case EntryType.Texture2D:
                         item.texture2D = e.Texture2DEntry.Value;
+                        item.OnChangeTexture2D = t => OnChangeTexture2D(e.ThemeId, t);
                         break;
-                } 
+                }
+                
                 hierarchy.Add(item);
             }
+        }
+
+        private void OnChangeTexture2D(int themeId, Texture2D texture2d)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.Texture2D) throw new SystemException($"Entry must be same type. expected {EntryType.Texture2D}, but {Entries[i].Type}");
+                    var newEntry = new Texture2DEntry(Entries[i].ThemeId, Entries[i].Key, texture2d);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
+        }
+
+        private void OnChangeSprite(int themeId, Sprite sprite)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.Sprite) throw new SystemException($"Entry must be same type. expected {EntryType.Sprite}, but {Entries[i].Type}");
+                    var newEntry = new SpriteEntry(Entries[i].ThemeId, Entries[i].Key, sprite);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
+        }
+
+        private void OnChangeText(int themeId, string text)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.String) throw new SystemException($"Entry must be same type. expected {EntryType.String}, but {Entries[i].Type}");
+                    var newEntry = new StringEntry(Entries[i].ThemeId, Entries[i].Key, text);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
+        }
+
+        private void OnChangeColor(int themeId, Color color)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.Color) throw new SystemException($"Entry must be same type. expected {EntryType.Color}, but {Entries[i].Type}");
+                    var newEntry = new ColorEntry(Entries[i].ThemeId, Entries[i].Key, color);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
         }
 
         void OnChangeKey(ChangeEvent<string> ev)

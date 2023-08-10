@@ -1,29 +1,34 @@
 using System;
+using UnityEngine;
 
 namespace UnityTheme.Model
 {
     [Serializable]
     public struct Theme
     {
-        public readonly int Id;
-        private string _name;
+        [SerializeField]
+        private int id;
+        [SerializeField]
+        private string name;
         [NonSerialized]
         public ThemeEvents.OnChangeName OnChangeName;
 
+        public int Id => id;
+
         public string Name
         {
-            get => _name;
+            get => name;
             set
             {
-                _name = value;
-                OnChangeName?.Invoke(_name);
+                name = value;
+                OnChangeName?.Invoke(name);
             }
         }
 
         public Theme(int id, string name)
         {
-            Id = id;
-            _name = name;
+            this.id = id;
+            this.name = name;
             OnChangeName = null;
         }
 

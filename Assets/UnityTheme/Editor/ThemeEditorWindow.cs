@@ -159,6 +159,7 @@ namespace UnityTheme.Editor
             if (themeItemRows.HasDuplicatedKey()) throw new DuplicateKey("Save failed. duplicated key found.");
             
             
+            Entries.Instance.ClearEntry();
             foreach (var row in themeItemRows)
             {
                 foreach (var e in row.Entries)
@@ -167,7 +168,7 @@ namespace UnityTheme.Editor
                 }
             }
 
-            
+            EntriesRepository.Save();
         }
 
 

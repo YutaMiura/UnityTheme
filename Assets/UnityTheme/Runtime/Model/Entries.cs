@@ -100,6 +100,11 @@ namespace UnityTheme.Model
             entries.Add(e);
         }
 
+        public void ClearEntry()
+        {
+            entries.Clear();
+        }
+
         private void ThrowIfDuplicateKey<T>(Entry<T> entry)
         {
             if (IsDuplicateKey(entry))

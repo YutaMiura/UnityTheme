@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace UnityTheme.Model
 {
@@ -6,10 +7,20 @@ namespace UnityTheme.Model
     public class EntryUnion : IDisposable
     {
         public readonly EntryType Type;
-        public readonly ColorEntry ColorEntry;
-        public readonly StringEntry StringEntry;
-        public readonly SpriteEntry SpriteEntry;
-        public readonly Texture2DEntry Texture2DEntry;
+
+        [SerializeField]
+        private ColorEntry colorEntry;
+        [SerializeField]
+        private StringEntry stringEntry;
+        [SerializeField]
+        private SpriteEntry spriteEntry;
+        [SerializeField]
+        private Texture2DEntry texture2DEntry;
+        
+        public ColorEntry ColorEntry => colorEntry;
+        public StringEntry StringEntry => stringEntry;
+        public SpriteEntry SpriteEntry => spriteEntry;
+        public Texture2DEntry Texture2DEntry => texture2DEntry;
 
         public string Key
         {
@@ -46,25 +57,25 @@ namespace UnityTheme.Model
         public EntryUnion(ColorEntry colorEntry)
         {
             Type = colorEntry.Type;
-            ColorEntry = colorEntry;
+            this.colorEntry = colorEntry;
         }
 
         public EntryUnion(StringEntry stringEntry)
         {
             Type = stringEntry.Type;
-            StringEntry = stringEntry;
+            this.stringEntry = stringEntry;
         }
 
         public EntryUnion(SpriteEntry spriteEntry)
         {
             Type = spriteEntry.Type;
-            SpriteEntry = spriteEntry;
+            this.spriteEntry = spriteEntry;
         }
 
         public EntryUnion(Texture2DEntry texture2DEntry)
         {
             Type = texture2DEntry.Type;
-            Texture2DEntry = texture2DEntry;
+            this.texture2DEntry = texture2DEntry;
         }
 
         public void Dispose()
