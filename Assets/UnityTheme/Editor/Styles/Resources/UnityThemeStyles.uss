@@ -1,18 +1,19 @@
 .header {
     height: 30px;
     width: auto;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 27px;
+    margin-right: 0;
     flex-direction: row;
 }
 
 .header TextField {
-    width: 120px;
-    min-width: 120px;
-    max-width: 280px;
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
     -unity-text-align: middle-center;    
-    border-right-width: 1px;
-    border-right-color: gray;
+    border-left-width: 1px;
+    border-left-color: gray;
+    margin: 0;
 }
 
 .header TextField TextInput {
@@ -32,16 +33,43 @@
 }
 
 .rows ThemeItemRow TextField {
-    width: 120px;
-    min-width: 120px;
-    max-width: 280px;
-    -unity-text-align: middle-center;
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
+    -unity-text-align: middle-left;
+    margin: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.rows ThemeItemRow TextInput {
+    margin-left: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.rows ThemeItemRow ObjectField {
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
+    margin: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.rows ThemeItemRow ColorField {
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
+    margin: 0;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .rows ThemeItemRow ThemeItemColumnItem {
     width: 120px;
     min-width: 120px;
-    max-width: 280px;
+    max-width: 120px;
     -unity-text-align: middle-center;
 }
 
@@ -58,4 +86,16 @@
     align-content: center;
     align-items: center;
     margin: 3px;
+}
+
+.removeThemeButton {
+    width: 15px;
+    height: 15px;
+    background-color: darkred;
+    align-content: center;
+    align-items: center;
+    margin: 3px;
+    position: relative;
+    right: 5px;
+    top: 5px;
 }

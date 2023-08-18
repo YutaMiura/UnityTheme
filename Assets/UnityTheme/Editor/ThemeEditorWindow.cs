@@ -29,13 +29,6 @@ namespace UnityTheme.Editor
             AddHandlers();
         }
 
-        private void OnClickThemeAdd()
-        {
-            var theme = Themes.Instance.AddTheme($"Theme {Themes.Instance.Count + 1}");
-            Entries.Instance.AddEntriesByNewTheme(theme);
-            DrawContents();
-        }
-
         private void OnClickCreateEntriesFirst()
         {
             EntriesFactory.CreateDefault();
@@ -99,13 +92,10 @@ namespace UnityTheme.Editor
                 createNewThemeButtonDescription.style.display = DisplayStyle.None;
                 createNewEntriesButton.style.display = DisplayStyle.None;
                 createNewEntriesButtonDescription.style.display = DisplayStyle.None;
-                var headerList = new List<string>()
-                {
-                    "Key"
-                };
-                headerList.AddRange(Themes.Instance.All.Select(t => t.Name));
+                var headerList = Themes.Instance.All.Select(t => $"{t.Id}:{t.Name}");
                 header.columns = string.Join(",", headerList);
-                header.OnClickThemeAdd = OnClickThemeAdd;
+                header.OnClickAddTheme = OnClickThemeAdd;
+                header.OnClickRemoveTheme = OnClickRemoveTheme;
                 
                 _rows.Clear();
                 foreach (var key in Entries.Instance.AllKeys)
@@ -133,6 +123,25 @@ namespace UnityTheme.Editor
                 controls.style.display = DisplayStyle.None;
                 createNewEntriesButton.style.display = DisplayStyle.Flex;
                 createNewEntriesButtonDescription.style.display = DisplayStyle.Flex;
+            }
+        }
+        
+        private void OnClickThemeAdd(int newThemeId)
+        {
+            var theme = Themes.Instance.AddTheme($"Theme {newThemeId}");
+            Entries.Instance.AddEntriesByNewTheme(theme);
+            DrawContents();
+        }
+
+        private void OnClickRemoveTheme(int themeid)
+        {
+            if (EditorUtility.DisplayDialog("Remove Theme",
+                    "Are you sure delete this Theme?\nAlso remove all entries related by this Theme.", "Delete",
+                    "Cancel"))
+            {
+                Themes.Instance.RemoveTheme(themeid);
+                Entries.Instance.RemoveAllRelatedByRemovedTheme(themeid);
+                DrawContents();    
             }
         }
 

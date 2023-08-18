@@ -125,6 +125,11 @@ namespace UnityTheme.Model
             }
         }
 
+        public void RemoveAllRelatedByRemovedTheme(int themeId)
+        {
+            entries.RemoveAll(e => e.ThemeId == themeId);
+        }
+
         public void AddEntry(EntryUnion entry)
         {
             ThrowIfDuplicateKey(entry);
