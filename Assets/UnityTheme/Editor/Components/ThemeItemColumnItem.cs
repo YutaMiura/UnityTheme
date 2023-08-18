@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -125,58 +123,6 @@ namespace UnityTheme.Editor
         }
         
         private Texture2D Texture2D;
-        
-        public new class UxmlFactory : UxmlFactory<ThemeItemColumnItem, UxmlTraits>{}
-
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-
-            private readonly UxmlEnumAttributeDescription<EntryType> _typeAttr = new UxmlEnumAttributeDescription<EntryType>()
-            {
-                name = "type"
-            };
-            
-            private readonly UxmlColorAttributeDescription _colorAttr = new UxmlColorAttributeDescription()
-            {
-                name = "color"
-            };
-
-            private readonly UxmlStringAttributeDescription _strAttr = new UxmlStringAttributeDescription()
-            {
-                name = "text"
-            };
-            
-            public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
-            {
-                get { yield break; }
-            }
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-                if (ve is ThemeItemColumnItem item)
-                {
-                    var type = _typeAttr.GetValueFromBag(bag, cc);
-                    switch (type)
-                    {
-                        case EntryType.Color:
-                            var color = _colorAttr.GetValueFromBag(bag, cc);
-                            item.color = color;
-                            break;
-                        case EntryType.String:
-                            var text = _strAttr.GetValueFromBag(bag, cc);
-                            item.text = text;
-                            break;
-                        default:
-                            throw new NotSupportedException($"{type} is not supported.");                         
-                    }
-                }
-                else
-                {
-                    throw new AggregateException($"{nameof(ThemeItemColumnItem)} initialize error.");
-                }
-            }
-        }
 
         public class ThemeItemColumnItemEvents
         {
