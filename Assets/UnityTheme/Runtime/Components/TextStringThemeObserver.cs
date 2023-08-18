@@ -4,6 +4,7 @@ using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
+    [AddComponentMenu("UI/UnityTheme/Observers/TextThemeObserver")]
     [RequireComponent(typeof(Text))]
     public class TextStringThemeObserver : MonoBehaviour
     {

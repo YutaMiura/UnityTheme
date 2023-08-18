@@ -119,6 +119,9 @@ namespace UnityTheme.Model
                         case EntryType.Texture:
                             AddEntry(TextureEntry.CreateDraftWithKey(theme.Id, key));
                             break;
+                        case EntryType.Gradient:
+                            AddEntry(GradientEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
                             
                     }
                 }
@@ -158,6 +161,13 @@ namespace UnityTheme.Model
         }
 
         public void AddEntry(TextureEntry entry)
+        {
+            ThrowIfDuplicateKey(entry);
+            var e = new EntryUnion(entry);
+            entries.Add(e);
+        }
+
+        public void AddEntry(GradientEntry entry)
         {
             ThrowIfDuplicateKey(entry);
             var e = new EntryUnion(entry);

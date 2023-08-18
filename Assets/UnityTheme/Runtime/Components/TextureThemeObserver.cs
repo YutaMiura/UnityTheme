@@ -4,6 +4,7 @@ using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
+    [AddComponentMenu("UI/UnityTheme/Observers/TextureThemeObserver")]
     [RequireComponent(typeof(RawImage))]
     public class TextureThemeObserver : MonoBehaviour
     {

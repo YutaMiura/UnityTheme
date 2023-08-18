@@ -4,6 +4,7 @@ using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
+    [AddComponentMenu("UI/UnityTheme/Observers/ColorThemeObserver")]
     [RequireComponent(typeof(Graphic))]
     public class ColorThemeObserver : MonoBehaviour
     {

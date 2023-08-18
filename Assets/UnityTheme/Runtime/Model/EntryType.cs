@@ -5,6 +5,7 @@ namespace UnityTheme.Model
         String,
         Color,
         Texture,
-        Sprite
+        Sprite,
+        Gradient
     }
 }

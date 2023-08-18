@@ -1,38 +1,35 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
-    [AddComponentMenu("UI/UnityTheme/Observers/SpriteThemeObserver")]
-    [RequireComponent(typeof(Image))]
-    public class SpriteThemeObserver : MonoBehaviour
+    [RequireComponent(typeof(GradientImage))]
+    public class GradientThemeObserver : MonoBehaviour
     {
         [SerializeField]
         private string key;
 
-        private Image _image;
+        private GradientImage _gradientImage;
 
         private void Awake()
         {
-            _image = GetComponent<Image>();
-
+            _gradientImage = GetComponent<GradientImage>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
-
+            
             OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
 
         private void OnChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
-            if (e.Type != EntryType.Sprite)
+            if (e.Type != EntryType.Gradient)
             {
                 Debug.LogWarning(
-                    $"{nameof(SpriteThemeObserver)} expects type of {EntryType.Sprite}, but you set {e.Type}");
+                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.Gradient}, but you set {e.Type}");
                 return;
             }
 
-            _image.sprite = e.SpriteEntry.Value;
+            _gradientImage.gradient = e.GradientEntry.Value;
         }
 
         private void OnDestroy()

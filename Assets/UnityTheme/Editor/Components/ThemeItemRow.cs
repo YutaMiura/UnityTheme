@@ -85,6 +85,10 @@ namespace UnityTheme.Editor
                         item.texture = e.TextureEntry.Value;
                         item.OnChangeTexture = t => OnChangeTexture(e.ThemeId, t);
                         break;
+                    case EntryType.Gradient:
+                        item.gradient = e.GradientEntry.Value;
+                        item.OnChangeGradient = g => OnChangeGradient(e.ThemeId, g);
+                        break;                     
                 }
                 
                 hierarchy.Add(item);
@@ -150,6 +154,23 @@ namespace UnityTheme.Editor
                 {
                     if (Entries[i].Type != EntryType.Color) throw new SystemException($"Entry must be same type. expected {EntryType.Color}, but {Entries[i].Type}");
                     var newEntry = new ColorEntry(Entries[i].ThemeId, Entries[i].Key, color);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
+        }
+
+        private void OnChangeGradient(int themeId, Gradient gradient)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.Gradient) throw new SystemException($"Entry must be same type. expected {EntryType.Gradient}, but {Entries[i].Type}");
+                    var newEntry = new GradientEntry(Entries[i].ThemeId, Entries[i].Key, gradient);
                     Entries[i].Dispose();
                     Entries[i] = new EntryUnion(newEntry);
                     return;

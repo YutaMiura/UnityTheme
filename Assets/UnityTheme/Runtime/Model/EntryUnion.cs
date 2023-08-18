@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UnityTheme.Model
 {
@@ -17,13 +16,16 @@ namespace UnityTheme.Model
         private StringEntry stringEntry;
         [SerializeField]
         private SpriteEntry spriteEntry;
-        [FormerlySerializedAs("texture2DEntry")] [SerializeField]
+        [SerializeField]
         private TextureEntry textureEntry;
+        [SerializeField]
+        private GradientEntry gradientEntry;
         
         public ColorEntry ColorEntry => colorEntry;
         public StringEntry StringEntry => stringEntry;
         public SpriteEntry SpriteEntry => spriteEntry;
         public TextureEntry TextureEntry => textureEntry;
+        public GradientEntry GradientEntry => gradientEntry;
 
         public string Key
         {
@@ -35,6 +37,7 @@ namespace UnityTheme.Model
                     EntryType.Sprite => SpriteEntry.Key,
                     EntryType.String => StringEntry.Key,
                     EntryType.Texture => TextureEntry.Key,
+                    EntryType.Gradient => GradientEntry.Key,
                     _ => throw new ArgumentException($"{Type} is not supported.")
                 };
             }
@@ -50,6 +53,7 @@ namespace UnityTheme.Model
                     EntryType.Sprite => SpriteEntry.ThemeId,
                     EntryType.String => StringEntry.ThemeId,
                     EntryType.Texture => TextureEntry.ThemeId,
+                    EntryType.Gradient => GradientEntry.ThemeId,
                     _ => throw new ArgumentException($"{Type} is not supported.")
                 };
             }
@@ -81,12 +85,19 @@ namespace UnityTheme.Model
             this.textureEntry = textureEntry;
         }
 
+        public EntryUnion(GradientEntry gradientEntry)
+        {
+            type = EntryType.Gradient;
+            this.gradientEntry = gradientEntry;
+        }
+
         public void Dispose()
         {
             ColorEntry?.Dispose();
             SpriteEntry?.Dispose();
             StringEntry?.Dispose();
             TextureEntry?.Dispose();
+            GradientEntry?.Dispose();
         }
 
         public override string ToString()
@@ -95,6 +106,7 @@ namespace UnityTheme.Model
             if (Type == EntryType.Sprite) return SpriteEntry?.ToString();
             if (Type == EntryType.String) return StringEntry?.ToString();
             if (Type == EntryType.Texture) return TextureEntry?.ToString();
+            if (Type == EntryType.Gradient) return GradientEntry?.ToString();
             return "EntryUnion has no Type.";
         }
     }
@@ -121,6 +133,11 @@ namespace UnityTheme.Model
             if (src.Type == EntryType.Texture)
             {
                 return new EntryUnion(new TextureEntry(src.ThemeId, key, src.TextureEntry.Value));
+            }
+
+            if (src.Type == EntryType.Gradient)
+            {
+                return new EntryUnion(new GradientEntry(src.ThemeId, key, src.GradientEntry.Value));
             }
 
             throw new ArgumentException($"{src.Type} is not supported.");

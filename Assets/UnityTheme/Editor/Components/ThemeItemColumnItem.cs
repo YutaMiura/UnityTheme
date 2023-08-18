@@ -13,6 +13,7 @@ namespace UnityTheme.Editor
         public ThemeItemColumnItemEvents.OnChangeColor OnChangeColor;
         public ThemeItemColumnItemEvents.OnChangeSprite OnChangeSprite;
         public ThemeItemColumnItemEvents.OnChangeTexture OnChangeTexture;
+        public ThemeItemColumnItemEvents.OnChangeGradient OnChangeGradient;
         
         public EntryType type { get; set; }
         private Color? _color;
@@ -114,6 +115,32 @@ namespace UnityTheme.Editor
             }
         }
 
+        private Gradient _gradient;
+
+        public Gradient gradient
+        {
+            get => _gradient;
+            set
+            {
+                ClearAllAttribute();
+                var gradientField =  new GradientField();                 
+                gradientField.style.width = ContentWidth;
+                gradientField.value = value;
+                gradientField.RegisterValueChangedCallback(ev => {
+                    if (ev.newValue == null)
+                    {
+                        OnChangeGradient?.Invoke(null);
+                    }
+                    else
+                    {
+                        OnChangeGradient?.Invoke(ev.newValue);
+                    }
+                });
+                hierarchy.Add(gradientField);
+                type = EntryType.Gradient;
+            }
+        }
+
         private void ClearAllAttribute()
         {
             _text = null;
@@ -130,6 +157,7 @@ namespace UnityTheme.Editor
             public delegate void OnChangeColor(Color color);
             public delegate void OnChangeSprite(Sprite sprite);
             public delegate void OnChangeTexture(Texture texture2D);
+            public delegate void OnChangeGradient(Gradient gradient);
         }
     }
 }
