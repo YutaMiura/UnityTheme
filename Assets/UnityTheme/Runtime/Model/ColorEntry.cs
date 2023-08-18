@@ -27,7 +27,12 @@ namespace UnityTheme.Model
 
         public static ColorEntry CreateDraft(int themeId)
         {
-            return new ColorEntry(themeId, "", Color.black);
+            return CreateDraftWithKey(themeId, "");
+        }
+
+        public static ColorEntry CreateDraftWithKey(int themeId, string key)
+        {
+            return new ColorEntry(themeId, key, Color.black);
         }
         
         public override string ToString()

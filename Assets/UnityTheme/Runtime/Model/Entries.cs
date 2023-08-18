@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using UnityTheme.Runtime.Exceptions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
-using UnityTheme.Runtime.Exceptions;
 
 namespace UnityTheme.Model
 {
@@ -25,6 +25,26 @@ namespace UnityTheme.Model
             var e =entries.FirstOrDefault(e => e.Key.Equals(key) && e.ThemeId == themeId);
             if (e == null) throw new NoEntryFound();
             return e;
+        }
+
+        public EntryType EntryTypeByKey(string key)
+        {
+            var e = entries.FirstOrDefault(e => e.Key.Equals(key));
+            if (e == null) throw new NoEntryFound();
+            return e.Type;
+        }
+
+        public bool TryGetEntryTypeByKey(string key, out EntryType? type)
+        {
+            var e = entries.FirstOrDefault(e => e.Key.Equals(key));
+            if (e == null)
+            {
+                type = null;
+                return false;
+            }
+
+            type = e.Type;
+            return true;
         }
 
         private static Entries _instance;
@@ -72,6 +92,37 @@ namespace UnityTheme.Model
         private void OnDestroy()
         {
             Debug.Log($"{nameof(Themes)} OnDestroy");
+        }
+
+        public void AddEntriesByNewTheme(Theme theme)
+        {
+            if (entries.Count == 0)
+            {
+                return;
+            }
+            
+            foreach (var key in AllKeys)
+            {
+                if (TryGetEntryTypeByKey(key, out var type))
+                {
+                    switch (type!)
+                    {
+                        case EntryType.Color:
+                            AddEntry(ColorEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
+                        case EntryType.Sprite:
+                            AddEntry(SpriteEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
+                        case EntryType.String:
+                            AddEntry(StringEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
+                        case EntryType.Texture:
+                            AddEntry(TextureEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
+                            
+                    }
+                }
+            }
         }
 
         public void AddEntry(EntryUnion entry)

@@ -53,7 +53,7 @@ namespace UnityTheme.Model
 
         private void OnValidate()
         {
-            if (_selectedThemeIndex < 0 || AvailableThemes.Count() >= _selectedThemeIndex)
+            if (_selectedThemeIndex < 0 || AvailableThemes.Count() <= _selectedThemeIndex)
             {
                 _selectedThemeIndex = 0;
                 return;

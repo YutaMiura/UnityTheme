@@ -31,7 +31,8 @@ namespace UnityTheme.Editor
 
         private void OnClickThemeAdd()
         {
-            Themes.Instance.AddTheme($"Theme {Themes.Instance.Count + 1}");
+            var theme = Themes.Instance.AddTheme($"Theme {Themes.Instance.Count + 1}");
+            Entries.Instance.AddEntriesByNewTheme(theme);
             DrawContents();
         }
 

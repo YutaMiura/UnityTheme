@@ -68,7 +68,7 @@ namespace UnityTheme.Model
             throw new NoThemeFound($"Theme[id:{id}] is not found.");
         }
 
-        public void AddTheme(string name)
+        public Theme AddTheme(string name)
         {
             var newThemeId = 1;
             if (themes == null)
@@ -82,6 +82,8 @@ namespace UnityTheme.Model
             var newTheme = new Theme(newThemeId, name);
             themes.Add(newTheme);
             OnAddTheme?.Invoke(newTheme);
+
+            return newTheme;
         }
 
         public void RemoveTheme(int id)

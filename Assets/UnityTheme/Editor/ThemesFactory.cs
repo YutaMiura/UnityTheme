@@ -8,6 +8,11 @@ namespace UnityTheme.Editor
     {
         public static Themes CreateDefault()
         {
+            return Create("Default");
+        }
+        
+        public static Themes Create(string name)
+        {
             var utils = new AssetDataBaseUtils<Themes>();
             var path = utils.AssetPath();
             if (path != null)
@@ -24,7 +29,7 @@ namespace UnityTheme.Editor
                 return null;
 
             var asset =  utils.CreateAsset(assetPath, false);
-            asset.AddTheme("Default");
+            asset.AddTheme(name);
             return asset;
         }
     }

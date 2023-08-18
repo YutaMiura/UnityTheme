@@ -29,7 +29,12 @@ namespace UnityTheme.Model
 
         public static StringEntry CreateDraft(int themeId)
         {
-            return new StringEntry(themeId, "", "");
+            return CreateDraftWithKey(themeId, "");
+        }
+
+        public static StringEntry CreateDraftWithKey(int themeId, string key)
+        {
+            return new StringEntry(themeId, key, "");
         }
 
         public override string ToString()
