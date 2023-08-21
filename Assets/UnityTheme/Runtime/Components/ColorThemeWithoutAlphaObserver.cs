@@ -1,36 +1,39 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
-    [RequireComponent(typeof(GradientImage))]
-    [AddComponentMenu("UI/UnityTheme/Observers/GradientThemeObserver")]
-    public class GradientThemeObserver : MonoBehaviour
+    [AddComponentMenu("UI/UnityTheme/Observers/ColorThemeWithoutAlphaObserver")]
+    [RequireComponent(typeof(Graphic))]
+    public class ColorThemeWithoutAlphaObserver : MonoBehaviour
     {
         [SerializeField]
         private string key;
 
-        private GradientImage _gradientImage;
-
+        private Graphic _graphic;
+        
         private void Awake()
         {
-            _gradientImage = GetComponent<GradientImage>();
+            _graphic = GetComponent<Graphic>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
-            
+
             OnChangeTheme(ThemeManager.Instance.SelectedTheme);
         }
-
+        
         private void OnChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
-            if (e.Type != EntryType.Gradient)
+            if (e.Type != EntryType.Color)
             {
                 Debug.LogWarning(
-                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.Gradient}, but you set {e.Type}");
+                    $"{nameof(ColorThemeObserver)} expects type of {EntryType.Color}, but you set {e.Type}");
                 return;
             }
 
-            _gradientImage.gradient = e.GradientEntry.Value;
+            var a = _graphic.color.a;
+            
+            _graphic.color = new Color(e.ColorEntry.Value.r, e.ColorEntry.Value.g, e.ColorEntry.Value.b, a);
         }
 
         private void OnDestroy()
