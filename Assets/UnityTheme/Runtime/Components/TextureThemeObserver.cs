@@ -6,35 +6,19 @@ namespace UnityTheme.Runtime.Components
 {
     [AddComponentMenu("UI/UnityTheme/Observers/TextureThemeObserver")]
     [RequireComponent(typeof(RawImage))]
-    public class TextureThemeObserver : MonoBehaviour
+    public class TextureThemeObserver : ThemeObserver<RawImage>
     {
-        [SerializeField] private string key;
-        private RawImage _image;
-
-        private void Awake()
-        {
-            _image = GetComponent<RawImage>();
-            ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
-
-            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
-        }
-
-        private void OnChangeTheme(Theme theme)
+        public override void ChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.Texture)
             {
                 Debug.LogWarning(
-                    $"{nameof(SpriteThemeObserver)} expects type of {EntryType.Texture}, but you set {e.Type}");
+                    $"{nameof(TextureThemeObserver)} expects type of {EntryType.Texture}, but you set {e.Type}");
                 return;
             }
 
-            _image.texture = e.TextureEntry.Value;
-        }
-
-        private void OnDestroy()
-        {
-            ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;
+            Target.texture = e.TextureEntry.Value;
         }
     }
 }

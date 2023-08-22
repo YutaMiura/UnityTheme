@@ -4,19 +4,9 @@ using UnityTheme.Model;
 namespace UnityTheme.Runtime.Components
 {
     [AddComponentMenu("UI/UnityTheme/Observers/GameObjectActiveThemeObserver")]
-    public class GameObjectActiveThemeObserver : MonoBehaviour
+    public class GameObjectActiveThemeObserver : ThemeObserver<MonoBehaviour>
     {
-        [SerializeField]
-        private string key;
-
-        private void Awake()
-        {
-            ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
-            
-            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
-        }
-
-        private void OnChangeTheme(Theme theme)
+        public override void ChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.GameObjectActive)
@@ -27,11 +17,6 @@ namespace UnityTheme.Runtime.Components
             }
 
             gameObject.SetActive(e.GameObjectActivateEntry.Value);
-        }
-
-        private void OnDestroy()
-        {
-            ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;
         }
     }
 }

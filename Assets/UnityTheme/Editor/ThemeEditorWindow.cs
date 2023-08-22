@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -85,6 +84,14 @@ namespace UnityTheme.Editor
             var createNewEntriesButton = rootVisualElement.Q<Button>("CreateEntries");
             var createNewThemeButtonDescription = rootVisualElement.Q<Label>("CreateNewThemeDescription");
             var createNewEntriesButtonDescription = rootVisualElement.Q<Label>("CreateNewEntriesDescription");
+            var themeSelect = rootVisualElement.Q<DropdownField>("SwitchTheme");
+            themeSelect.choices.Clear();
+            themeSelect.choices = Themes.Instance.All.Select(t => t.Name).ToList();
+            if (themeSelect.choices.Count > 0)
+            {
+                themeSelect.index = 0;    
+            }
+            
             
             var header = rootVisualElement.Q<ThemeItemListHeader>("header");
             if (IsReady)
@@ -153,11 +160,24 @@ namespace UnityTheme.Editor
         {
             var createNewThemeButton = rootVisualElement.Q<Button>("CreateTheme");
             var createNewEntriesButton = rootVisualElement.Q<Button>("CreateEntries");
+            var themeSelect = rootVisualElement.Q<DropdownField>("SwitchTheme");
+            themeSelect.RegisterValueChangedCallback(ev => {
+                if (Themes.Instance.TryFind(ev.newValue, out var theme))
+                {
+                    ChangeThemeInHierarchy(theme);
+                }
+            });
             createNewThemeButton.clicked += OnClickCreateNewThemeFirst;
             createNewEntriesButton.clicked += OnClickCreateEntriesFirst;
             var addButton = rootVisualElement.Q<Button>("AddButton");
             addButton.clicked += OnClickAdd;
         }
+
+        void ChangeThemeInHierarchy(Theme theme)
+        {
+            Themes.Instance.ApplyThemeInHierarchy(theme);
+        }
+        
 
         private void OnGUI()
         {

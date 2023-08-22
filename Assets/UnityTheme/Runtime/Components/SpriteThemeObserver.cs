@@ -6,23 +6,9 @@ namespace UnityTheme.Runtime.Components
 {
     [AddComponentMenu("UI/UnityTheme/Observers/SpriteThemeObserver")]
     [RequireComponent(typeof(Image))]
-    public class SpriteThemeObserver : MonoBehaviour
+    public class SpriteThemeObserver : ThemeObserver<Image>
     {
-        [SerializeField]
-        private string key;
-
-        private Image _image;
-
-        private void Awake()
-        {
-            _image = GetComponent<Image>();
-
-            ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
-
-            OnChangeTheme(ThemeManager.Instance.SelectedTheme);
-        }
-
-        private void OnChangeTheme(Theme theme)
+        public override void ChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
             if (e.Type != EntryType.Sprite)
@@ -32,12 +18,7 @@ namespace UnityTheme.Runtime.Components
                 return;
             }
 
-            _image.sprite = e.SpriteEntry.Value;
-        }
-
-        private void OnDestroy()
-        {
-            ThemeManager.Instance.OnChangeTheme -= OnChangeTheme;
+            Target.sprite = e.SpriteEntry.Value;
         }
     }
 }

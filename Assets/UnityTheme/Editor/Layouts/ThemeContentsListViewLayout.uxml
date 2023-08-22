@@ -2,6 +2,7 @@
     <Style src="project://database/Assets/UnityTheme/Editor/Styles/Resources/UnityThemeStyles.uss?fileID=7433441132597879392&amp;guid=7570c54b0f6654ed49cefbc6b9a317fd&amp;type=3#UnityThemeStyles" />
     <ui:VisualElement name="controls" style="flex-direction: row; flex-grow: 0; justify-content: flex-end; align-self: auto; margin-right: 5px; margin-left: 5px; margin-top: 10px; margin-bottom: 5px;">
         <ui:DropdownField choices="All,Color,String,Texture2D,Sprite" name="Filter" label="Filter" tooltip="You can filter by category." usage-hints="None" style="flex-grow: 0; flex-basis: auto; flex-shrink: 1; margin-right: auto;" />
+        <ui:DropdownField name="SwitchTheme" label="SwitchTheme" tooltip="You can switch theme in Editor mode." usage-hints="None" style="flex-grow: 0; flex-basis: auto; flex-shrink: 1; margin-right: auto;" />
         <ui:EnumField type="UnityTheme.Model.EntryType, jp.moguai.unitytheme" name="AddCategory" />
         <ui:Button name="AddButton" style="align-self: flex-end;">
             <ui:Label text="+" />
