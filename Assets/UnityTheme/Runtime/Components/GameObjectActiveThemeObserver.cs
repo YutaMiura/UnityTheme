@@ -3,18 +3,14 @@ using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
-    [RequireComponent(typeof(GradientImage))]
-    [AddComponentMenu("UI/UnityTheme/Observers/GradientThemeObserver")]
-    public class GradientThemeObserver : MonoBehaviour
+    [AddComponentMenu("UI/UnityTheme/Observers/GameObjectActiveThemeObserver")]
+    public class GameObjectActiveThemeObserver : MonoBehaviour
     {
         [SerializeField]
         private string key;
 
-        private GradientImage _gradientImage;
-
         private void Awake()
         {
-            _gradientImage = GetComponent<GradientImage>();
             ThemeManager.Instance.OnChangeTheme += OnChangeTheme;
             
             OnChangeTheme(ThemeManager.Instance.SelectedTheme);
@@ -23,14 +19,14 @@ namespace UnityTheme.Runtime.Components
         private void OnChangeTheme(Theme theme)
         {
             var e = Entries.Instance.FindEntryByKeyAndTheme(key, theme.Id);
-            if (e.Type != EntryType.Gradient)
+            if (e.Type != EntryType.GameObjectActive)
             {
                 Debug.LogWarning(
-                    $"{nameof(GradientThemeObserver)} expects type of {EntryType.Gradient}, but you set {e.Type}");
+                    $"{nameof(GameObjectActiveThemeObserver)} expects type of {EntryType.GameObjectActive}, but you set {e.Type}");
                 return;
             }
 
-            _gradientImage.gradient = e.GradientEntry.Value;
+            gameObject.SetActive(e.GameObjectActivateEntry.Value);
         }
 
         private void OnDestroy()

@@ -122,7 +122,9 @@ namespace UnityTheme.Model
                         case EntryType.Gradient:
                             AddEntry(GradientEntry.CreateDraftWithKey(theme.Id, key));
                             break;
-                            
+                        case EntryType.GameObjectActive:
+                            AddEntry(GameObjectActivateEntry.CreateDraftWithKey(theme.Id, key));
+                            break;
                     }
                 }
             }
@@ -168,6 +170,13 @@ namespace UnityTheme.Model
         }
 
         public void AddEntry(GradientEntry entry)
+        {
+            ThrowIfDuplicateKey(entry);
+            var e = new EntryUnion(entry);
+            entries.Add(e);
+        }
+
+        public void AddEntry(GameObjectActivateEntry entry)
         {
             ThrowIfDuplicateKey(entry);
             var e = new EntryUnion(entry);

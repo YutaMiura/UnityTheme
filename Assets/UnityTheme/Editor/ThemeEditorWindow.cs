@@ -56,6 +56,8 @@ namespace UnityTheme.Editor
                         return new EntryUnion(TextureEntry.CreateDraft(t.Id));
                     case EntryType.Gradient:
                         return new EntryUnion(GradientEntry.CreateDraft(t.Id));
+                    case EntryType.GameObjectActive:
+                        return new EntryUnion(GameObjectActivateEntry.CreateDraft(t.Id));
                     default:
                         throw new NotSupportedException($"{e} is not supported EntryType.");
                 }
