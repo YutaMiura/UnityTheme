@@ -88,7 +88,11 @@ namespace UnityTheme.Editor
                     case EntryType.Gradient:
                         item.gradient = e.GradientEntry.Value;
                         item.OnChangeGradient = g => OnChangeGradient(e.ThemeId, g);
-                        break;                     
+                        break;
+                    case EntryType.GameObjectActive:
+                        item.GameObjectActivate = e.GameObjectActivateEntry.Value;
+                        item.OnChangeActivate = v => OnChangeActivate(e.ThemeId, v);
+                        break;
                 }
                 
                 hierarchy.Add(item);
@@ -171,6 +175,23 @@ namespace UnityTheme.Editor
                 {
                     if (Entries[i].Type != EntryType.Gradient) throw new SystemException($"Entry must be same type. expected {EntryType.Gradient}, but {Entries[i].Type}");
                     var newEntry = new GradientEntry(Entries[i].ThemeId, Entries[i].Key, gradient);
+                    Entries[i].Dispose();
+                    Entries[i] = new EntryUnion(newEntry);
+                    return;
+                }
+            }
+            
+            throw new SystemException($"Entry has not theme:{themeId}");
+        }
+
+        private void OnChangeActivate(int themeId, bool value)
+        {
+            for (var i = 0; i < Entries.Length; i++)
+            {
+                if (Entries[i].ThemeId == themeId)
+                {
+                    if (Entries[i].Type != EntryType.GameObjectActive) throw new SystemException($"Entry must be same type. expected {EntryType.GameObjectActive}, but {Entries[i].Type}");
+                    var newEntry = new GameObjectActivateEntry(Entries[i].ThemeId, Entries[i].Key, value);
                     Entries[i].Dispose();
                     Entries[i] = new EntryUnion(newEntry);
                     return;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityTheme.Runtime.Components;
 #endif
 using UnityEngine;
 using UnityTheme.Runtime.Exceptions;
@@ -25,7 +26,7 @@ namespace UnityTheme.Model
         public bool IsEmpty => themes.Count == 0;
 
         public int Count => themes.Count();
-        
+
         private static Themes _instance;
 
         public static Themes Instance
@@ -67,6 +68,34 @@ namespace UnityTheme.Model
 
             throw new NoThemeFound($"Theme[id:{id}] is not found.");
         }
+        
+        public Theme Find(string name)
+        {
+            for (int i = 0; i < themes.Count; i++)
+            {
+                if (themes[i].Name.Equals(name))
+                {
+                    return themes[i];
+                }
+            }
+
+            throw new NoThemeFound($"Theme[name:{name}] is not found.");
+        }
+
+        public bool TryFind(string name, out Theme theme)
+        {
+            for (int i = 0; i < themes.Count; i++)
+            {
+                if (themes[i].Name.Equals(name))
+                {
+                    theme = themes[i];
+                    return true;
+                }
+            }
+
+            theme = default;
+            return false;
+        }
 
         public Theme AddTheme(string name)
         {
@@ -79,6 +108,7 @@ namespace UnityTheme.Model
             {
                 newThemeId = themes.Max(t => t.Id) + 1;
             }
+
             var newTheme = new Theme(newThemeId, name);
             themes.Add(newTheme);
             OnAddTheme?.Invoke(newTheme);
@@ -99,10 +129,14 @@ namespace UnityTheme.Model
                 }
             }
         }
-        
+
         private void OnValidate()
         {
+#if UNITY_EDITOR
             Debug.Log($"{nameof(Themes)} OnValidate");
+            if (themes.Count == 0) return;
+            ApplyThemeInHierarchy(themes.First());
+#endif
         }
 
         private void Awake()
@@ -122,6 +156,51 @@ namespace UnityTheme.Model
         {
             Debug.Log($"{nameof(Themes)} OnDestroy");
         }
+
+#if UNITY_EDITOR
+        public void ApplyThemeInHierarchy(Theme theme)
+        {
+            foreach (var o in FindObjectsOfType<ColorThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<ColorThemeWithoutAlphaObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<GameObjectActiveThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<GradientThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<SpriteThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<TextStringThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<TextureThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+
+            foreach (var o in FindObjectsOfType<TMPTextStringThemeObserver>(true))
+            {
+                o.ChangeTheme(theme);
+            }
+        }
+#endif
     }
 
     public class ThemesEvent

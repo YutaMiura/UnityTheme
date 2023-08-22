@@ -14,6 +14,7 @@ namespace UnityTheme.Editor
         public ThemeItemColumnItemEvents.OnChangeSprite OnChangeSprite;
         public ThemeItemColumnItemEvents.OnChangeTexture OnChangeTexture;
         public ThemeItemColumnItemEvents.OnChangeGradient OnChangeGradient;
+        public ThemeItemColumnItemEvents.OnChangeActivate OnChangeActivate;
         
         public EntryType type { get; set; }
         private Color? _color;
@@ -141,6 +142,25 @@ namespace UnityTheme.Editor
             }
         }
 
+        private bool _gameObjectActivate;
+
+        public bool GameObjectActivate
+        {
+            get => _gameObjectActivate;
+            set
+            {
+                ClearAllAttribute();
+                var toggle = new Toggle();
+                toggle.style.width = ContentWidth;
+                toggle.value = value;
+                toggle.RegisterValueChangedCallback(ev => {
+                    OnChangeActivate?.Invoke(ev.newValue);
+                });
+                hierarchy.Add(toggle);
+                type = EntryType.GameObjectActive;
+            }
+        }
+
         private void ClearAllAttribute()
         {
             _text = null;
@@ -158,6 +178,7 @@ namespace UnityTheme.Editor
             public delegate void OnChangeSprite(Sprite sprite);
             public delegate void OnChangeTexture(Texture texture2D);
             public delegate void OnChangeGradient(Gradient gradient);
+            public delegate void OnChangeActivate(bool value);
         }
     }
 }
