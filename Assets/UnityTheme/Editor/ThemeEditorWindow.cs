@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -40,33 +41,39 @@ namespace UnityTheme.Editor
 
         private void OnClickAdd()
         {
-            var d = rootVisualElement.Q<EnumField>("AddCategory");
-            var e = (EntryType)d.value;
-            var entries = Themes.Instance.All.Select(t => {
-                switch (e)
-                {
-                    case EntryType.Color:
-                        return new EntryUnion(ColorEntry.CreateDraft(t.Id));
-                    case EntryType.Sprite:
-                        return new EntryUnion(SpriteEntry.CreateDraft(t.Id));
-                    case EntryType.String:
-                        return new EntryUnion(StringEntry.CreateDraft(t.Id));
-                    case EntryType.Texture:
-                        return new EntryUnion(TextureEntry.CreateDraft(t.Id));
-                    case EntryType.Gradient:
-                        return new EntryUnion(GradientEntry.CreateDraft(t.Id));
-                    case EntryType.GameObjectActive:
-                        return new EntryUnion(GameObjectActivateEntry.CreateDraft(t.Id));
-                    default:
-                        throw new NotSupportedException($"{e} is not supported EntryType.");
-                }
-            }).ToArray();
-            var row = new ThemeItemRow();
-            row.SetEntries(entries);
-            row.OnDeleteEntry += OnDeleteEntry;
-            _rows.Add(row);
+            var d = rootVisualElement.Q<DropdownField>("AddCategory");
+            if (Enum.TryParse<EntryType>(d.value, out EntryType e))
+            {
+                var entries = Themes.Instance.All.Select(t => {
+                    switch (e)
+                    {
+                        case EntryType.Color:
+                            return new EntryUnion(ColorEntry.CreateDraft(t.Id));
+                        case EntryType.Sprite:
+                            return new EntryUnion(SpriteEntry.CreateDraft(t.Id));
+                        case EntryType.String:
+                            return new EntryUnion(StringEntry.CreateDraft(t.Id));
+                        case EntryType.Texture:
+                            return new EntryUnion(TextureEntry.CreateDraft(t.Id));
+                        case EntryType.Gradient:
+                            return new EntryUnion(GradientEntry.CreateDraft(t.Id));
+                        case EntryType.GameObjectActive:
+                            return new EntryUnion(GameObjectActivateEntry.CreateDraft(t.Id));
+                        default:
+                            throw new NotSupportedException($"{e} is not supported EntryType.");
+                    }
+                }).ToArray();
+                var row = new ThemeItemRow();
+                row.SetEntries(entries);
+                row.OnDeleteEntry += OnDeleteEntry;
+                _rows.Add(row);
             
-            _rows.MarkDirtyRepaint();
+                _rows.MarkDirtyRepaint();    
+            }
+            else
+            {
+                Debug.LogError($"{d.value} is not includes in {nameof(EntryType)}");
+            }
         }
 
         private void OnDeleteEntry(string key)
@@ -85,11 +92,17 @@ namespace UnityTheme.Editor
             var createNewThemeButtonDescription = rootVisualElement.Q<Label>("CreateNewThemeDescription");
             var createNewEntriesButtonDescription = rootVisualElement.Q<Label>("CreateNewEntriesDescription");
             var themeSelect = rootVisualElement.Q<DropdownField>("SwitchTheme");
-            themeSelect.choices.Clear();
             themeSelect.choices = Themes.Instance.All.Select(t => t.Name).ToList();
             if (themeSelect.choices.Count > 0)
             {
-                themeSelect.index = 0;    
+                themeSelect.SetValueWithoutNotify(themeSelect.choices[0]);
+            }
+            
+            var d = rootVisualElement.Q<DropdownField>("AddCategory");
+            d.choices = Enum.GetNames(typeof(EntryType)).ToList();;
+            if (d.choices.Count > 0)
+            {
+                d.SetValueWithoutNotify(d.choices[0]);                
             }
             
             
