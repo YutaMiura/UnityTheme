@@ -23,9 +23,9 @@ namespace UnityTheme.Model
 
         public IReadOnlyList<Theme> All => themes;
 
-        public bool IsEmpty => themes.Count == 0;
+        public bool IsEmpty => themes?.Count == 0;
 
-        public int Count => themes.Count();
+        public int Count => themes?.Count() ?? 0;
 
         private static Themes _instance;
 
@@ -160,42 +160,7 @@ namespace UnityTheme.Model
 #if UNITY_EDITOR
         public void ApplyThemeInHierarchy(Theme theme)
         {
-            foreach (var o in FindObjectsOfType<ColorThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<ColorThemeWithoutAlphaObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<GameObjectActiveThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<GradientThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<SpriteThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<TextStringThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<TextureThemeObserver>(true))
-            {
-                o.ChangeTheme(theme);
-            }
-
-            foreach (var o in FindObjectsOfType<TMPTextStringThemeObserver>(true))
+            foreach (var o in FindObjectsOfType<ThemeObserverBase>(true))
             {
                 o.ChangeTheme(theme);
             }

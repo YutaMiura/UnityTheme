@@ -3,7 +3,7 @@ using UnityTheme.Model;
 
 namespace UnityTheme.Runtime.Components
 {
-    public abstract class ThemeObserver<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class ThemeObserver<T> : ThemeObserverBase where T : MonoBehaviour
     {
         [SerializeField]
         protected string key;
@@ -21,7 +21,7 @@ namespace UnityTheme.Runtime.Components
         }
         
         
-        public abstract void ChangeTheme(Theme theme);
+        public abstract override void ChangeTheme(Theme theme);
 
         private void OnDestroy()
         {
